@@ -1,16 +1,28 @@
 import React from 'react';
-//import './App.css';
-import './index.css';
-import SchoolReg from './registrationForm/SchoolReg.js';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './landingpage/Home';
+import About from './landingpage/About';
+import Contact from './landingpage/Contact';
+import Navbar from './landingpage/Navbar';
+import StudentForm from './registrationForm/Studentform';
+import SchoolReg from './registrationForm/SchoolReg';
+import PartnerReg from './registrationForm/PartnerReg';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Student Registration</h1>
-        <SchoolReg />
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/student-registration" element={<StudentForm />} />
+          <Route path="/school-registration" element={<SchoolReg />} />
+          <Route path="/partner-registration" element={<PartnerReg />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

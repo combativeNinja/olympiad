@@ -1,14 +1,14 @@
 import React from 'react'
 
 const SchoolReg = () => {
-  return (
+    return (
     <div className='h-full'>
         <h1 className=' mt-4 text-3xl font-bold text-center'>School Registration</h1>
         <div className='h-full flex justify-center mt-8'>
             <div className="w-full max-w-md">
-                <form classNameName="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        <label className="test block text-gray-700 text-sm font-bold mb-2" for="username">
                             School Name
                         </label>
                         <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"/>
@@ -75,7 +75,7 @@ const SchoolReg = () => {
             </div>
         </div>
     </div>
-  )
+)
 }
 
 export default SchoolReg
