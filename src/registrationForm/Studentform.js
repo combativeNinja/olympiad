@@ -37,7 +37,7 @@
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/studentRegister', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/studentRegister`, formData, {
                 headers: {
                     'Content-Type': 'application/json',  // Set the content type to JSON
                 },
