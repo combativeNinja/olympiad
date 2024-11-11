@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { getAllUsers, createUser } = require('../controllers/userController');
+const { getAllUsers, createUser } = require('../controller/userController');
 
 // Define routes and assign controller methods
 router.get('/', getAllUsers);

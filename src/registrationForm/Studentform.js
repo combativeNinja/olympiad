@@ -1,5 +1,5 @@
     import React, { useState } from 'react';
-
+    import axios from 'axios';
     const StudentForm = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -20,24 +20,33 @@
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
-        setFormData((prevData) => ({
-            ...prevData,
-            subjects: checked
-            ? [...prevData.subjects, value]
-            : prevData.subjects.filter((subject) => subject !== value),
-        }));
+            setFormData((prevData) => ({
+                ...prevData,
+                subjects: checked
+                ? [...prevData.subjects, value]
+                : prevData.subjects.filter((subject) => subject !== value),
+            }));
         } else {
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form Data:', formData);
-        // Here you can add the logic to send the form data to the backend
+        try {
+            const response = await axios.post('http://localhost:3000/api/studentRegister', formData, {
+                headers: {
+                    'Content-Type': 'application/json',  // Set the content type to JSON
+                },
+            });
+    
+            console.log('Server Response:', response.data);  // Log the response from the server
+        } catch (error) {
+            console.error('Error submitting form:', error);  // Handle any errors
+        }
     };
 
     return (
