@@ -1,40 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useFormik } from "formik";
 import axios from 'axios';
+import { partnerValidation } from "../validationSchema/partnerVal";
 
 const PartnerReg = () => {
-    const [formData, setFormData] = useState({
-        partnerName: '',
-        state: '',
-        city: '',
-        pincode: '',
-        contactName: '',
-        email: '',
-        phone: '',
-        address: ''
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (values, actions) => {
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/partner/register`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/partner/register`, values, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-
+            actions.resetForm();
             console.log('Server Response:', response.data);
         } catch (error) {
             console.error('Error submitting form:', error);
         }
     };
+
+    const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+        initialValues: {
+            partnerName: '',
+            state: '',
+            city: '',
+            pincode: '',
+            contactName: '',
+            email: '',
+            phone: '',
+            address: ''
+        },
+        validationSchema: partnerValidation,
+        onSubmit,
+    });
 
     return (
         <div className='h-full'>
@@ -47,14 +44,16 @@ const PartnerReg = () => {
                                 Partner Name
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className={`${errors.partnerName && touched.partnerName ? "input-error" : ""} shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                 id="partnerName"
                                 type="text"
                                 name="partnerName"
-                                value={formData.partnerName}
+                                value={values.partnerName}
                                 onChange={handleChange}
                                 placeholder="Partner Name"
+                                onBlur={handleBlur}
                             />
+                            {errors.partnerName && touched.partnerName && <p className='error'>{errors.partnerName}</p>}
                         </div>
 
                         <div className='flex flex-wrap -mx-3 mb-2'>
@@ -63,42 +62,48 @@ const PartnerReg = () => {
                                     State
                                 </label>
                                 <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    className={`${errors.state && touched.state ? "input-error" : ""} appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
                                     id="state"
                                     type="text"
                                     name="state"
-                                    value={formData.state}
+                                    value={values.state}
                                     onChange={handleChange}
                                     placeholder="State"
+                                    onBlur={handleBlur}
                                 />
+                                {errors.state && touched.state && <p className='error'>{errors.state}</p>}
                             </div>
                             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="city">
                                     City
                                 </label>
                                 <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    className={`${errors.city && touched.city ? "input-error" : ""} appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
                                     id="city"
                                     type="text"
                                     name="city"
-                                    value={formData.city}
+                                    value={values.city}
                                     onChange={handleChange}
                                     placeholder="City"
+                                    onBlur={handleBlur}
                                 />
+                                {errors.city && touched.city && <p className='error'>{errors.city}</p>}
                             </div>
                             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="pincode">
                                     Pincode
                                 </label>
                                 <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    className={`${errors.pincode && touched.pincode ? "input-error" : ""} appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
                                     id="pincode"
                                     type="text"
                                     name="pincode"
-                                    value={formData.pincode}
+                                    value={values.pincode}
                                     onChange={handleChange}
                                     placeholder="Pincode"
+                                    onBlur={handleBlur}
                                 />
+                                {errors.pincode && touched.pincode && <p className='error'>{errors.pincode}</p>}
                             </div>
                         </div>
 
@@ -107,14 +112,16 @@ const PartnerReg = () => {
                                 Contact Name
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className={`${errors.contactName && touched.contactName ? "input-error" : ""} shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                 id="contactName"
                                 type="text"
                                 name="contactName"
-                                value={formData.contactName}
+                                value={values.contactName}
                                 onChange={handleChange}
                                 placeholder="Contact Name"
+                                onBlur={handleBlur}
                             />
+                            {errors.contactName && touched.contactName && <p className='error'>{errors.contactName}</p>}
                         </div>
 
                         <div className="mb-4">
@@ -122,14 +129,16 @@ const PartnerReg = () => {
                                 Email
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className={`${errors.email && touched.email ? "input-error" : ""} shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                 id="email"
                                 type="email"
                                 name="email"
-                                value={formData.email}
+                                value={values.email}
                                 onChange={handleChange}
                                 placeholder="Email"
+                                onBlur={handleBlur}
                             />
+                            {errors.email && touched.email && <p className='error'>{errors.email}</p>}
                         </div>
 
                         <div className="mb-4">
@@ -137,14 +146,16 @@ const PartnerReg = () => {
                                 Phone
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className={`${errors.phone && touched.phone ? "input-error" : ""} shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                 id="phone"
                                 type="tel"
                                 name="phone"
-                                value={formData.phone}
+                                value={values.phone}
                                 onChange={handleChange}
                                 placeholder="Phone"
+                                onBlur={handleBlur}
                             />
+                            {errors.phone && touched.phone && <p className='error'>{errors.phone}</p>}
                         </div>
 
                         <div className="mb-4">
@@ -152,17 +163,19 @@ const PartnerReg = () => {
                                 Address
                             </label>
                             <textarea
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className={`${errors.address && touched.address ? "input-error" : ""} shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                                 id="address"
                                 name="address"
-                                value={formData.address}
+                                value={values.address}
                                 onChange={handleChange}
                                 placeholder="Address"
+                                onBlur={handleBlur}
                             />
+                            {errors.address && touched.address && <p className='error'>{errors.address}</p>}
                         </div>
 
                         <div className="flex items-center justify-end">
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            <button disabled={isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                 Register
                             </button>
                         </div>
