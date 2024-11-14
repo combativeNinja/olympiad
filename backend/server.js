@@ -17,9 +17,11 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 const userRoutes = require('./routes/userRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const partnerRoutes = require('./routes/partnerRoutes');
+const schoolRoutes = require('./routes/schoolRoutes');
 app.use('/api/users', userRoutes);
 app.use('/api/student',studentRoutes);
 app.use('/api/partner', partnerRoutes);   
+app.use('/api/school',schoolRoutes);
 
 
 

@@ -1,23 +1,23 @@
-const Partner = require('../models/Partner');
+const School = require('../models/School');
 const User = require('../models/User');
 const generateRandomString = require('../common/randomStringGen');
 
-const registerPartner = async (req, res) => {
+const registerSchool = async (req, res) => {
     try {
-        let user_name = 'check1'; 
+        let user_name = 'check2'; 
         const pass = generateRandomString(10);
         
         const user = new User({
             username: user_name,
             password: pass,
-            type: 'partner'
+            type: 'school'
         });
     
         const saveUser = await user.save();
         const userid = saveUser._id;
         
-        const partner = new Partner({
-            partnerName: req.body.partnerName,
+        const school = new School({
+            schoolName: req.body.schoolName,
             state: req.body.state,
             city: req.body.city,
             pincode: req.body.pincode,
@@ -27,18 +27,18 @@ const registerPartner = async (req, res) => {
             address: req.body.address,
             user_id: userid
         });
+
+        const newSchool = await school.save();
         
-        const newPartner = await partner.save();
-        
-        res.status(200).json({ message: 'Partner registered successfully' });
+        res.status(200).json({ message: 'School registered successfully' });
     } catch (error) {
 
         if (error.code === 11000) {
             res.status(400).json({ message: 'Duplicate key error: Email or username already exists', error });
         } else {
-            res.status(500).json({ message: 'Error registering partner', error });
+            res.status(500).json({ message: 'Error registering school', error });
         }
     }
 };
 
-module.exports = { registerPartner };
+module.exports = { registerSchool };
