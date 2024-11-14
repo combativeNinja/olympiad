@@ -4,7 +4,7 @@ const generateRandomString = require('../common/randomStringGen');
 
 const registerPartner = async (req, res) => {
     try {
-        let user_name = 'check1'; // Replace this with dynamic username logic if needed
+        let user_name = 'check1'; 
         const pass = generateRandomString(10);
         
         // Create a new User instance
@@ -13,12 +13,10 @@ const registerPartner = async (req, res) => {
             password: pass,
             type: 'partner'
         });
-        
-        // Save the User and get the generated ID
+    
         const saveUser = await user.save();
         const userid = saveUser._id;
         
-        // Create a new Partner instance with the User ID
         const partner = new Partner({
             partnerName: req.body.partnerName,
             state: req.body.state,
